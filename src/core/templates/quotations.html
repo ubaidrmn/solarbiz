@@ -1,0 +1,21 @@
+{% extends 'components/filter_list_layout.html' %}
+
+{% block title %}Quotations{% endblock %}
+
+{% block page_header %}
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <div>
+        <h2>Quotations</h2>
+        <p>Welcome to your quotations page!</p>
+    </div>
+    <a href="{% url 'quotations_create' %}"><button type="button" class="btn btn-success">Create Quotation</button></a>
+</div>
+{% endblock %}
+
+{% block filter_form %}
+    {% include 'components/quotations_filter_form.html' %}
+{% endblock %}
+
+{% block list_table %}
+    {% include 'components/quotations_list_table.html' %}
+{% endblock %}

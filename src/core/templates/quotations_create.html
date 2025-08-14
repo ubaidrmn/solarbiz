@@ -1,0 +1,38 @@
+{% extends 'components/base.html' %}
+
+{% block title %}Create Quotation{% endblock %}
+
+{% block content %}
+
+<div class="p-5">
+    <div class="mb-2">
+        <h2>Create Quotation</h2>
+        <p>Create your quotation using the form below.</p>
+    </div>
+
+    <label class="form-label">Select Quotation Type</label>
+    <select class="form-select" aria-label="Default select example">
+        <option selected value="ON_GRID">On Grid</option>
+        <option value="OFF_GRID">Off Grid</option>
+        <option value="HYBRID">Hybrid</option>
+    </select>
+
+    <div class="row">
+        <div class="col">
+            <label class="form-label">Solar Panels</label>
+            <select class="form-select">
+                <option value="OFF_GRID">Off Grid</option>
+                <option value="HYBRID">Hybrid</option>
+            </select>
+        </div>
+        <div class="col-6">
+        2 of 3 (wider)
+        </div>
+        <div class="col">
+        3 of 3
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
