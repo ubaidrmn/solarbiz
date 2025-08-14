@@ -1,0 +1,126 @@
+<form id="filtersForm" method="get">
+    <div class="accordion" id="filtersAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSearch">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
+                    Search
+                </button>
+            </h2>
+            <div id="collapseSearch" class="accordion-collapse collapse show" aria-labelledby="headingSearch">
+                <div class="accordion-body">
+                    <input type="text" class="form-control" name="q" placeholder="Search products..." value="{{ filters.q }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingDefaultPrice">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDefaultPrice" aria-expanded="false" aria-controls="collapseDefaultPrice">
+                    Price
+                </button>
+            </h2>
+            <div id="collapseDefaultPrice" class="accordion-collapse collapse" aria-labelledby="headingDefaultPrice">
+                <div class="accordion-body">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <label for="priceMin" class="form-label">Min</label>
+                            <input id="priceMin" class="form-control" type="number" name="price_min" min="0" value="{{ filters.price_min }}">
+                        </div>
+                        <div class="col">
+                            <label for="priceMax" class="form-label">Max</label>
+                            <input id="priceMax" class="form-control" type="number" name="price_max" min="0" value="{{ filters.price_max }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingProductType">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductType" aria-expanded="false" aria-controls="collapseProductType">
+                    Product Type
+                </button>
+            </h2>
+            <div id="collapseProductType" class="accordion-collapse collapse" aria-labelledby="headingProductType">
+                <div class="accordion-body">
+                    <select class="form-select" name="product_type">
+                        <option value="">All</option>
+                        {% for val,label in product_type_choices %}
+                            <option value="{{ val }}" {% if filters.product_type == val %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingBrand">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrand" aria-expanded="false" aria-controls="collapseBrand">
+                    Brand
+                </button>
+            </h2>
+            <div id="collapseBrand" class="accordion-collapse collapse" aria-labelledby="headingBrand">
+                <div class="accordion-body">
+                    <select class="form-select" name="brand">
+                        <option value="">All</option>
+                        {% for val,label in brand_choices %}
+                            <option value="{{ val }}" {% if filters.brand == val %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingWarranty">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWarranty" aria-expanded="false" aria-controls="collapseWarranty">
+                    Warranty Years
+                </button>
+            </h2>
+            <div id="collapseWarranty" class="accordion-collapse collapse" aria-labelledby="headingWarranty">
+                <div class="accordion-body">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <label for="warrantyMin" class="form-label">Min</label>
+                            <input id="warrantyMin" class="form-control" type="number" name="warranty_min" min="0" value="{{ filters.warranty_min }}">
+                        </div>
+                        <div class="col">
+                            <label for="warrantyMax" class="form-label">Max</label>
+                            <input id="warrantyMax" class="form-control" type="number" name="warranty_max" min="0" value="{{ filters.warranty_max }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="d-flex gap-2 mt-3">
+        <a class="btn btn-outline-secondary w-50" href="{% url 'products' %}">Reset</a>
+        <button class="btn btn-primary w-50" type="submit">Apply</button>
+    </div>
+</form>
+
+<script>
+  // Auto-apply filters on change with debounce for text/number inputs
+  (function() {
+    const form = document.getElementById('filtersForm');
+    if (!form) return;
+
+    const debounce = (fn, wait = 500) => {
+      let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn.apply(null, args), wait); };
+    };
+
+    const submitForm = () => { form.requestSubmit ? form.requestSubmit() : form.submit(); };
+
+    form.querySelectorAll('select,input[type="checkbox"]').forEach(el => {
+      el.addEventListener('change', submitForm);
+    });
+
+    const debouncedSubmit = debounce(submitForm, 500);
+    form.querySelectorAll('input[type="text"], input[type="number"]').forEach(el => {
+      el.addEventListener('input', debouncedSubmit);
+      el.addEventListener('change', submitForm);
+      el.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitForm(); });
+    });
+  })();
+</script>

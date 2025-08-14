@@ -1,0 +1,30 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Warranty Years</th>
+        <th scope="col">Product Type</th>
+        <th scope="col">Brand</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if products %}
+            {% for c in products %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ c.description }}</td>
+                <td>{{ c.price }}</td>
+                <td>{{ c.warranty_years }}</td>
+                <td>{{ c.product_type }}</td>
+                <td>{{ c.brand }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="9" class="text-center text-muted">No products found.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
