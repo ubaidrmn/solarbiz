@@ -1,0 +1,30 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">City</th>
+        <th scope="col">Address</th>
+        <th scope="col">Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if customers %}
+            {% for c in customers %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ c.name }}</td>
+                <td>{{ c.phone }}</td>
+                <td>{{ c.get_city_display }}</td>
+                <td>{{ c.address }}</td>
+                <td>{{ c.notes }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="9" class="text-center text-muted">No customers yet. Click "Add Customer" to create one.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
