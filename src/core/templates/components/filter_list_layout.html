@@ -1,0 +1,38 @@
+{% extends 'components/base.html' %}
+
+{% block content %}
+
+<div class="p-5">
+    {% if messages %}
+    <div class="mb-3">
+        {% for message in messages %}
+            {% if 'error' in message.tags %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% else %}
+                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block page_header %}{% endblock %}
+
+    <div class="row">
+        <div class="col-12 col-md-3 mb-4">
+            {% block filter_form %}{% endblock %}
+        </div>
+
+        <div class="col-12 col-md-9">
+            {% block list_table %}{% endblock %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
